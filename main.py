@@ -70,5 +70,28 @@ def cria_populacao_inicial(numero=QUANTIDADE_POPULACAO):
     return sorted(lista, key=lambda w: w[5], reverse=True)
 
 
+def corte(num,lista):
+    return lista[:num]
+
 populacaoInicial = cria_populacao_inicial()
-printer(populacaoInicial)
+
+melhores = corte(4,populacaoInicial)
+
+for um in melhores:
+
+
+
+def criaNovaPopulacao(_nova, _corte):
+    c = 0
+    t = 4
+    for cut in _corte:
+        while c < t:
+            _nova.append(setDict(bin='{}{}'.format(
+                cut[2][:-2],
+                _corte[random.randint(0, _corte.__len__() - 1)][2][4:]
+            )))
+            t -= 1
+        c += 1
+        t = 4;
+    return _nova
+
