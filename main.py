@@ -67,10 +67,8 @@ def cria_populacao_inicial(numero=QUANTIDADE_POPULACAO):
     f = open('populacaoInicial.txt', 'w')
     f.write(lista.__str__())
     f.close()
-    return lista
+    return sorted(lista, key=lambda w: w[5], reverse=True)
+
 
 populacaoInicial = cria_populacao_inicial()
-printer(populacaoInicial)
-populacaoInicial = sorted(populacaoInicial, key=lambda w: w[5], reverse=True)
-print('')
 printer(populacaoInicial)
