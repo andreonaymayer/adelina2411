@@ -3,6 +3,9 @@ import time
 
 VALORMINIMOPARA_XYZW = 0
 VALORMAXIMOPARA_XYZW = 10
+VALORMAXIMOPARA_X = 15
+VALORMAXIMOPARA_Y = 14
+VALORMAXIMOPARA_Z = 5
 QUANTIDADE_POPULACAO = 10
 QUANTIDADE_MUTACAO = 5
 CORTE = 4
@@ -19,30 +22,13 @@ def printer(l: list):
 
 
 def toBin(n):
-    if n == 0:
-        return '0000'
-    elif n == 1:
-        return '0001'
-    elif n == 2:
-        return '0010'
-    elif n == 3:
-        return '0011'
-    elif n == 4:
-        return '0100'
-    elif n == 5:
-        return '0101'
-    elif n == 6:
-        return '0110'
-    elif n == 7:
-        return '0111'
-    elif n == 8:
-        return '1000'
-    elif n == 9:
-        return '1001'
-    elif n == 10:
-        return '1010'
+    numero = format(n, 'b')
+    while numero.__len__() < 4:
+        numero = '0'+numero
+    return numero
+
 def trocaBinToInt(nomeBin):
-    decimal =0
+    decimal = 0
     binario = int(nomeBin)
     i=0
     n=len(str(nomeBin))
@@ -60,16 +46,16 @@ def trocaBinToInt(nomeBin):
 
 
 def funcaoFitness(x, y, z, w):
-    return 5 * x + y * 2 + w + z * 3
+    return 5 * x + y * 2 + w + z ** 3
 
 
-def rnd():
-    return random.randint(VALORMINIMOPARA_XYZW, VALORMAXIMOPARA_XYZW)
+def rnd(valorMaximo =VALORMAXIMOPARA_XYZW):
+    return random.randint(VALORMINIMOPARA_XYZW, valorMaximo)
 
 def cria():
-    x = rnd()
-    y = rnd()
-    z = rnd()
+    x = rnd(VALORMAXIMOPARA_X)
+    y = rnd(VALORMAXIMOPARA_Y)
+    z = rnd(VALORMAXIMOPARA_Z)
     w = rnd()
     cc = '{}{}{}{}'.format(toBin(x), toBin(y), toBin(z), toBin(w))
     ft = funcaoFitness(x, y, z, w)
@@ -95,7 +81,7 @@ def criaNovaPopulacao(_nova, _corte) :
     c = 0
     t = 4
     for cut in _corte:
-        print(cut)
+        print(cut[4][:-5])
         while c < t:
             _nova.append(setDict(bin='{}{}'.format(
                 cut[4][:-5],
@@ -151,9 +137,11 @@ def dictToList(dic: dict):
 
 def verificaFim(matr):
     print(matr[0][5])
-    if matr[0][5] == 185:
-      return True
-    return False
+    ret=False
+    for mt in matr:
+        if mt[5]== 185:
+            ret=True
+    return ret
 
 populacaoInicial = cria_populacao_inicial()
 printer(populacaoInicial)
