@@ -81,7 +81,6 @@ def criaNovaPopulacao(_nova, _corte) :
     c = 0
     t = 4
     for cut in _corte:
-        print(cut[4][:-5])
         while c < t:
             _nova.append(setDict(bin='{}{}'.format(
                 cut[4][:-5],
@@ -136,7 +135,6 @@ def dictToList(dic: dict):
     return mat
 
 def verificaFim(matr):
-    print(matr[0][5])
     ret=False
     for mt in matr:
         if mt[5]== 185:
@@ -144,24 +142,26 @@ def verificaFim(matr):
     return ret
 
 populacaoInicial = cria_populacao_inicial()
+print('População inicial')
 printer(populacaoInicial)
 matriz = populacaoInicial
 novaPopulacao = []
-
+geracao =0
 while verificaFim(matriz) is False:
-
+    geracao +=1
+    print('GERAÇÂO: ' + str(geracao))
     melhores = corte(CORTE,populacaoInicial)
     criaNovaPopulacao(novaPopulacao,melhores)
+    print('Nova população')
     printer(novaPopulacao)
     mutacao(novaPopulacao)
-    print('')
     printer(novaPopulacao)
     converteCromossomo(novaPopulacao)
-    printer(novaPopulacao)
+#    printer(novaPopulacao)
     matriz = dictToList(novaPopulacao)
     novaPopulacao = []
     matriz=sorted(matriz, key=lambda w: w[5], reverse=True)
-
+    print('Mutação')
     printer(matriz)
 
 
